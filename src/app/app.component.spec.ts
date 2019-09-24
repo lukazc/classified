@@ -1,16 +1,21 @@
-import { TestBed, async } from '@angular/core/testing';
+﻿import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { AppComponent } from './app.component';
+import { NavBarComponent } from './app-shell/nav-bar/nav-bar.component';
+import { FooterComponent } from './app-shell/footer/footer.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
       declarations: [
-        AppComponent
+        AppComponent,
+        NavBarComponent,
+        FooterComponent,
       ],
+      imports: [
+        RouterTestingModule,
+      ]
     }).compileComponents();
   }));
 
@@ -20,16 +25,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'classified'`, () => {
+  it(`should have as title 'upload_tagger'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('classified');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('classified app is running!');
+    expect(app.title).toEqual('upload_tagger');
   });
 });

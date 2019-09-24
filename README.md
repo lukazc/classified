@@ -1,27 +1,51 @@
-# Classified
+﻿## Getting Started
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
+In the root directory of the project...
 
-## Development server
+1. Install node modules `yarn install` or `npm install`.
+2. Start development server `yarn start` or `npm start`.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Next Steps
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Sample Data
 
-## Build
+Replace the sample data stored in /server/sampleData.js.
+Replace the default images stored in /src/images.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Adding a New Page
 
-## Running unit tests
+1. Create a folder in `/src/app/app-shell` with your angular modules.
+2. Add a child route for your page to `/src/app/*.module.ts`.
+3. Add a button to the navigation bar in `/src/app/app-shell/nav-bar/nav-bar.component.html`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## File Structure
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+The back-end is based on [Express Generator](https://expressjs.com/en/starter/generator.html).
+The front-end is based on [Angular cli "ng"](https://angular.io/cli).
 
-## Further help
+The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+.
+├── server/ - Express server that provides API routes and serves front-end
+│ ├── routes/ - Handles API calls for routes
+│ ├── app.js - Adds middleware to the express server
+│ ├── sampleData.js - Contains all sample text data for generate pages
+│ ├── constants.js - Defines the constants for the endpoints and port
+│ └── server.js - Configures Port and HTTP Server
+├── src - Angular front-end
+│ └── app - Angular main root module
+│    ├── app-shell - Angular main components
+│    └── app.module.ts - Angular root module.
+└── README.md
+```
+
+## Additional Documentation
+
+- Angular Docs - https://angular.io/docs
+- Angular Router - https://angular.io/guide/router
+
+- Bootstrap CSS - https://getbootstrap.com/
+- Express - https://expressjs.com/
