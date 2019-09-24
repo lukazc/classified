@@ -74,3 +74,6 @@ Thumbs.db
 
 # uploaded stuff
 /datastore
+
+# my Google Vision API credentials
+credentials.json
