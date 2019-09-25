@@ -1,4 +1,4 @@
-﻿const CONSTANTS = require("../constants");
+const CONSTANTS = require("../constants");
 const express = require("express");
 const sampleData = require("../sampleData");
 
@@ -14,7 +14,10 @@ const datastorePath = path.join('datastore');
 
 // init Google Vision
 const vision = require('@google-cloud/vision');
-const client = new vision.ImageAnnotatorClient();
+const GOOGLE_APPLICATION_CREDENTIALS_PATH = 'credentials.json';
+const client = new vision.ImageAnnotatorClient({
+	keyFilename: GOOGLE_APPLICATION_CREDENTIALS_PATH
+});
 
 const router = express.Router();
 // MasterDetail Page Endpoint
