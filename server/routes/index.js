@@ -60,18 +60,17 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 	router.post(CONSTANTS.ENDPOINT.PHOTO, upload.single('photo'), function(req, res) {
 		console.log(req.file);
 		
-		const filename = req.file.buffer.filename;
-		const b64 = req.file.buffer.toString('base64');
+		const filename = req.file.filename;
+		const filePath = req.file.path;
+		
+		// read binary data
+		const bitmap = fs.readFileSync(filePath);
+		// convert binary data to base64 encoded string
+		const b64 = new Buffer.from(bitmap).toString('base64');
 
-		const visionApiAnnotations = annotateImage(b64);
-		// const machineLearningAnnotations = 
+		annotateImage({ filename, filePath, b64 }, res);
 
-		imageAnnotations[filename] = {};
-		imageAnnotations[filename]['visionApiAnnotations'] = visionApiAnnotations;
-		// imageAnnotations[filename]['machineLearningAnnotations'] = visionApiAnnotations;
-
-
-		res.json(imageAnnotations);
+		// res.json(imageAnnotations);
 	});
 	
 	// get photos
@@ -89,6 +88,8 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		// {
 		//   // or get list of all images
 		// }
+
+		console.log('imageAnnotations', imageAnnotations)
 		
 		let base64Photos = {};
 		
@@ -104,9 +105,8 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			// add image to response
 			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + b64;
 			
-			// TODO add image labels to response
-			base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo]['visionApiAnnotations'];
-			// base64Photos[photo]['machineLearningLabels'] = 
+			// TODO uncomment when fixed
+			// base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo]['visionApiAnnotations'];
 			
 		});
 		
@@ -148,12 +148,12 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		// });
 	}
 
-	async function annotateImage(image) {
+	async function annotateImage({ filename, filePath, b64 }, response = false) {
 		try {
 			const [result] = await client.annotateImage(
 				{
 					"image":{
-					  "content": image,
+					  "content": b64,
 					},
 					"features": [
 					  {
@@ -167,7 +167,14 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			console.log('annotateImage RESULT ', result)
 			// base64Photos[photo][labels] = result.imageAnnotations;
 
-			return result;
+
+			// TODO fix saving annotations
+			imageAnnotations[filename] = {};
+			imageAnnotations[filename]['visionApiAnnotations'] = result;
+			// imageAnnotations[filename]['machineLearningAnnotations'] = visionApiAnnotations;
+
+			// TODO add base64 to beginning of img
+			if (response) response.json({ b64, result });
 
 		} catch (error) {
 			console.log('annotateImage ERROR ', error);
