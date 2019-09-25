@@ -1,4 +1,4 @@
-const CONSTANTS = require("../constants");
+﻿const CONSTANTS = require("../constants");
 const express = require("express");
 const sampleData = require("../sampleData");
 
@@ -11,6 +11,8 @@ const path = require("path");
 const fs = require("fs");
 let datastorePhotos = [];
 const datastorePath = path.join('datastore');
+
+const imageAnnotations = require('../imageAnnotations');
 
 // init Google Vision
 const vision = require('@google-cloud/vision');
@@ -103,11 +105,8 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + b64;
 			
 			// TODO add image labels to response
-			// base64Photos[photo]['visionApiLabels'] = 
+			base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo]['visionApiAnnotations'];
 			// base64Photos[photo]['machineLearningLabels'] = 
-			
-			// !!!! MOVE TO UPLOAD AND STORE THE LABELS ONLY ONCE
-			annotateImage(base64Photos[photo]['src']);
 			
 		});
 		
