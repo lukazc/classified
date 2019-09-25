@@ -68,6 +68,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		// convert binary data to base64 encoded string
 		const b64 = new Buffer.from(bitmap).toString('base64');
 
+		// pass response as callback to wait for Vision API response
 		annotateImage({ filename, filePath, b64 }, res);
 
 		// res.json(imageAnnotations);
@@ -75,19 +76,6 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 	
 	// get photos
 	router.get(CONSTANTS.ENDPOINT.PHOTO, function(req, res) {
-		// res.writeHead(200, {
-		//   "Content-Type": "application/octet-stream",
-		//   "Content-Disposition": "attachment; filename=" + photo
-		// });
-		
-		// if (req.query && req.query.name) {
-		//   // get requested image
-		//   fs.createReadStream(path.join(datastorePath, req.query.name), { encoding: 'base64' }).pipe(res);
-		// }
-		// else
-		// {
-		//   // or get list of all images
-		// }
 
 		console.log('imageAnnotations', imageAnnotations)
 		
@@ -105,7 +93,6 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			// add image to response
 			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + b64;
 			
-			// TODO uncomment when fixed
 			base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo] ? imageAnnotations[photo]['visionApiAnnotations'] : null;
 			
 		});
@@ -150,6 +137,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 
 	async function annotateImage({ filename, filePath, b64 }, response = false) {
 		try {
+			// TODO test additional features
 			const [result] = await client.annotateImage(
 				{
 					"image":{
@@ -168,10 +156,10 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			// base64Photos[photo][labels] = result.imageAnnotations;
 
 
-			// TODO fix saving annotations
+			// TODO permanent saving annotations
 			imageAnnotations[filename] = {};
 			imageAnnotations[filename]['visionApiAnnotations'] = result;
-			// imageAnnotations[filename]['machineLearningAnnotations'] = visionApiAnnotations;
+			// imageAnnotations[filename]['machineLearningAnnotations'] =
 
 			// TODO add base64 to beginning of img
 			if (response) response.json({ b64, result });
