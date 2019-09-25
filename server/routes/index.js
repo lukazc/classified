@@ -106,7 +106,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + b64;
 			
 			// TODO uncomment when fixed
-			// base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo]['visionApiAnnotations'];
+			base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo] ? imageAnnotations[photo]['visionApiAnnotations'] : null;
 			
 		});
 		
