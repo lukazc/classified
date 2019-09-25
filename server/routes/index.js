@@ -57,8 +57,19 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 	// upload photo
 	router.post(CONSTANTS.ENDPOINT.PHOTO, upload.single('photo'), function(req, res) {
 		console.log(req.file);
-		// const encoded = req.file.buffer.toString('base64');
-		res.json('xd');
+		
+		const filename = req.file.buffer.filename;
+		const b64 = req.file.buffer.toString('base64');
+
+		const visionApiAnnotations = annotateImage(b64);
+		// const machineLearningAnnotations = 
+
+		imageAnnotations[filename] = {};
+		imageAnnotations[filename]['visionApiAnnotations'] = visionApiAnnotations;
+		// imageAnnotations[filename]['machineLearningAnnotations'] = visionApiAnnotations;
+
+
+		res.json(imageAnnotations);
 	});
 	
 	// get photos
