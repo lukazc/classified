@@ -21,7 +21,7 @@
       </form>
     </div>
     <div> 
-      <img *ngFor="let photo of photos | keyvalue" [src]="photo.value" (click)="handleDeletePhoto(photo.key)">
+      <img *ngFor="let photo of photos | keyvalue" [src]="photo.value.src" (click)="handleDeletePhoto(photo.key)">
     </div>
 
     <app-warning-message
