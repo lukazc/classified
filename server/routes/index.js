@@ -83,16 +83,17 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		datastorePhotos.forEach(photo => {
 			// fs.createReadStream(path.join(datastorePath, photo), { encoding: 'base64' }).pipe(res);
 			
-			// read binary data
-			var bitmap = fs.readFileSync(path.join(datastorePath, photo));
-			// convert binary data to base64 encoded string
 			base64Photos[photo] = {};
-			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + new Buffer.from(bitmap).toString('base64');
+			// read binary data
+			let bitmap = fs.readFileSync(path.join(datastorePath, photo));
+			// convert binary data to base64 encoded string
+			let b64 = new Buffer.from(bitmap).toString('base64');
+			// add image to response
+			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + b64;
 			
-			// const [result] = await client.labelDetection('./resources/wakeupcat.jpg');
-			// const labels = result.labelAnnotations;
-			// console.log('Labels:');
-			// labels.forEach(label => console.log(label.description));
+			// TODO add image labels to response
+			// base64Photos[photo]['visionApiLabels'] = 
+			// base64Photos[photo]['machineLearningLabels'] = 
 			
 			// !!!! MOVE TO UPLOAD AND STORE THE LABELS ONLY ONCE
 			annotateImage(base64Photos[photo]['src']);
