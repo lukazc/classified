@@ -11,7 +11,10 @@ const path = require("path");
 const fs = require("fs");
 let datastorePhotos = [];
 const datastorePath = path.join('datastore');
-readDatastore
+
+// init Google Vision
+const vision = require('@google-cloud/vision');
+const client = new vision.ImageAnnotatorClient();
 
 const router = express.Router();
 // MasterDetail Page Endpoint
