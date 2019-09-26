@@ -110,6 +110,8 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		const { name } = req.params;
 		fs.unlink(path.join(datastorePath, name), function(err) {
 			if(err) throw err;
+
+			// TODO delete annotations from JSON
 			
 			console.log('File deleted ' + name);
 			res.json({ name: name, text: "This photo was deleted" });

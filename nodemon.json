@@ -1,0 +1,3 @@
+{
+    "ignore": ["imageAnnotations.json", "datastore/*"]
+  }
