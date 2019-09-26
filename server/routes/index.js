@@ -79,22 +79,25 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 
 		console.log('imageAnnotations', imageAnnotations)
 		
-		let base64Photos = {};
+		let base64Photos = [];
 		
 		readDatastore();
-		datastorePhotos.forEach(photo => {
+		datastorePhotos.forEach(filename => {
 			// fs.createReadStream(path.join(datastorePath, photo), { encoding: 'base64' }).pipe(res);
 			
-			base64Photos[photo] = {};
+			let image = {};
+			image['filename'] = filename;
+
 			// read binary data
-			let bitmap = fs.readFileSync(path.join(datastorePath, photo));
+			let bitmap = fs.readFileSync(path.join(datastorePath, filename));
 			// convert binary data to base64 encoded string
 			let b64 = new Buffer.from(bitmap).toString('base64');
 			// add image to response
-			base64Photos[photo]['src'] = 'data:image/jpeg;base64,' + b64;
+			image['b64'] = 'data:image/jpeg;base64,' + b64;
+			// add label annotations from Vision API
+			image['labelAnnotations'] = imageAnnotations[filename] ? imageAnnotations[filename]['visionApiAnnotations'] : null;
 			
-			base64Photos[photo]['visionApiAnnotations'] = imageAnnotations[photo] ? imageAnnotations[photo]['visionApiAnnotations'] : null;
-			
+			base64Photos.push(image);
 		});
 		
 		res.json(base64Photos);
@@ -161,8 +164,12 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			imageAnnotations[filename]['visionApiAnnotations'] = result;
 			// imageAnnotations[filename]['machineLearningAnnotations'] =
 
-			// TODO add base64 to beginning of img
-			if (response) response.json({ b64, result });
+			// append encoding type to beginning so the img src can interpret it
+			b64 = 'data:image/jpeg;base64,' + b64;
+		
+			let labelAnnotations = result['labelAnnotations'];
+
+			if (response) response.json({ filename, b64, labelAnnotations });
 
 		} catch (error) {
 			console.log('annotateImage ERROR ', error);
