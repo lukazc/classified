@@ -12,8 +12,6 @@ const fs = require("fs");
 let datastorePhotos = [];
 const datastorePath = path.join('datastore');
 
-const imageAnnotations = require('../imageAnnotations');
-
 // init Google Vision
 const vision = require('@google-cloud/vision');
 const GOOGLE_APPLICATION_CREDENTIALS_PATH = 'credentials.json';
@@ -77,8 +75,6 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 	// get photos
 	router.get(CONSTANTS.ENDPOINT.PHOTO, function(req, res) {
 
-		console.log('imageAnnotations', imageAnnotations)
-		
 		let base64Photos = [];
 		
 		readDatastore();
@@ -95,7 +91,14 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			// add image to response
 			image['b64'] = 'data:image/jpeg;base64,' + b64;
 			// add label annotations from Vision API
-			image['labelAnnotations'] = imageAnnotations[filename] ? imageAnnotations[filename]['visionApiAnnotations'] : null;
+			let imageAnnotations;
+			try {
+				imageAnnotations = JSON.parse(fs.readFileSync('imageAnnotations.json', { encoding: 'utf8' }));
+			} catch (error) {
+				imageAnnotations = {};
+				console.log('GET IMAGES readFile imageAnnotations ERROR -> ', error);
+			}
+			image['labelAnnotations'] = imageAnnotations[filename] ? imageAnnotations[filename]['labelAnnotations'] : null;
 			
 			base64Photos.push(image);
 		});
@@ -155,14 +158,33 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 				  }
 			);
 
-			console.log('annotateImage RESULT ', result)
 			// base64Photos[photo][labels] = result.imageAnnotations;
 
-
-			// TODO permanent saving annotations
-			imageAnnotations[filename] = {};
-			imageAnnotations[filename]['visionApiAnnotations'] = result;
+			// imageAnnotations[filename] = {};
+			// imageAnnotations[filename]['visionApiAnnotations'] = result;
 			// imageAnnotations[filename]['machineLearningAnnotations'] =
+			
+			// TODO permanent saving annotations
+			fs.readFile('imageAnnotations.json', 'utf8', (err, data) => {
+
+				let imageAnnotations;
+
+				if (err){ 
+					imageAnnotations = {};
+					console.log('readFile imageAnnotations ERROR -> ', err);
+				} else {
+					imageAnnotations = JSON.parse(data);
+				}
+
+				//add annotations
+				imageAnnotations[filename] = result;
+				//convert it back to json
+				json = JSON.stringify(imageAnnotations);
+				// write to disk 
+				fs.writeFile('imageAnnotations.json', json, 'utf8', (error) => {
+					console.log('writeFile imageAnnotations ERROR -> ', error)
+				});
+			});
 
 			// append encoding type to beginning so the img src can interpret it
 			b64 = 'data:image/jpeg;base64,' + b64;

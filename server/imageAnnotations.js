@@ -1,3 +1,0 @@
-imageAnnotations = {};
-
-module.exports = imageAnnotations;
