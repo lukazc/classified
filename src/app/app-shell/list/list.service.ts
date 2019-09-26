@@ -33,9 +33,9 @@ export class ListService {
     return this.http.delete<IListItem>(`${environment.endpoint.list}/${id}`);
   }
 
-  getPhotos(): Observable<Object> {
+  getPhotos(): Observable<Array<Object>> {
     // const headers = new HttpHeaders().set('Accept-Encoding', 'base64');
-    return this.http.get<Object>(this.photosUrl);
+    return this.http.get<Array<Object>>(this.photosUrl);
     // return this.http.get(this.photosUrl, { responseType: 'text'});
   }
 

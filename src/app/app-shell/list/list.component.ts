@@ -9,7 +9,7 @@ import { ListService, IListItem } from './list.service';
 })
 export class ListComponent implements OnInit {
 	listItems: IListItem[] = [];
-	photos = {};
+	photos = [];
 	chosenPhoto: File;
 	WarningMessageText = 'Request to get list items failed:';
 	WarningMessageOpen = false;
@@ -29,7 +29,6 @@ export class ListComponent implements OnInit {
 		this.listService.getPhotos().subscribe(
 			res => {
 				this.photos = res;
-				console.log(this.photos)
 			},
 			error => {
 				console.log(error)
@@ -84,6 +83,7 @@ export class ListComponent implements OnInit {
 		this.listService.addPhoto(this.chosenPhoto).subscribe(
 			(response) => {
 				// this.photos.splice(0, 0, response);
+				this.photos.push(response);
 			},
 			error => {
 				this.WarningMessageOpen = true;
@@ -92,9 +92,13 @@ export class ListComponent implements OnInit {
 			);
 	}
 
-	handleDeletePhoto(photo) {
-		this.listService.deletePhoto(photo).subscribe(
-			res => console.log('photo deleted ' + photo),
+	handleDeletePhoto(filename, i) {
+		this.photos.splice(i, 1);
+		this.listService.deletePhoto(filename).subscribe(
+			res => {
+
+				console.log('photo deleted ' + filename)
+			},
 			error => {
 				this.WarningMessageOpen = true;
 				this.WarningMessageText = `Request to delete photo failed: ${error}`;

@@ -20,8 +20,13 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-    <div> 
-      <img *ngFor="let photo of photos | keyvalue" [src]="photo.value.src" (click)="handleDeletePhoto(photo.key)">
+    <div>
+      <ng-container *ngFor="let photo of photos">
+        <img [src]="'data:image/jpeg;base64,' + photo.b64" (click)="handleDeletePhoto(photo.filename)">
+        <div *ngFor="let annotation of photo.labelAnnotations">
+          {{ annotation.description }}
+        </div>
+      <!-- </ng-container> -->
     </div>
 
     <app-warning-message
