@@ -93,7 +93,7 @@ export class ListComponent implements OnInit {
 	}
 
 	handleDeletePhoto(filename, i) {
-		this.photos.splice(i, 1);
+		this.photos.splice(i);
 		this.listService.deletePhoto(filename).subscribe(
 			res => {
 
