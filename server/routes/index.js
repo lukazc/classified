@@ -159,14 +159,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 					]
 				  }
 			);
-
-			// base64Photos[photo][labels] = result.imageAnnotations;
-
-			// imageAnnotations[filename] = {};
-			// imageAnnotations[filename]['visionApiAnnotations'] = result;
-			// imageAnnotations[filename]['machineLearningAnnotations'] =
 			
-			// TODO permanent saving annotations
 			fs.readFile('imageAnnotations.json', 'utf8', (err, data) => {
 
 				let imageAnnotations;
