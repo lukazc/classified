@@ -7,9 +7,9 @@
 })
 export class GridBoxComponent implements OnInit {
 
-  @Input() key: number;
+  @Input() filename: number;
   @Input() header: string;
-  @Input() description: string;
+  @Input() labels: string;
   @Input() image: string;
 
   constructor() { }
