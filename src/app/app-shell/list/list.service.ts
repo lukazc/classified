@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ListService {
   private listUrl = environment.endpoint.list;
-  private photosUrl = environment.endpoint.photo;
+  private imagesUrl = environment.endpoint.image;
 
   constructor(private http: HttpClient) { }
 
@@ -35,7 +35,7 @@ export class ListService {
 
   getPhotos(): Observable<Array<Object>> {
     // const headers = new HttpHeaders().set('Accept-Encoding', 'base64');
-    return this.http.get<Array<Object>>(this.photosUrl);
+    return this.http.get<Array<Object>>(this.imagesUrl);
     // return this.http.get(this.photosUrl, { responseType: 'text'});
   }
 
@@ -54,11 +54,11 @@ export class ListService {
     const formData =  new FormData();
     formData.append('photo', photo);
 
-    return this.http.post<IListItem>(this.photosUrl, formData);
+    return this.http.post<IListItem>(this.imagesUrl, formData);
   }
 
   deletePhoto(name: string) {
-    return this.http.delete(`${environment.endpoint.photo}/${name}`);
+    return this.http.delete(`${environment.endpoint.image}/${name}`);
   }
 }
 

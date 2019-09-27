@@ -7,7 +7,7 @@ export const environment = {
   endpoint: {
     masterdetail : '/api/masterdetail',
     list : '/api/list',
-    photo : '/api/photo',
+    image : '/api/image',
     grid : '/api/grid',
   }
 };
