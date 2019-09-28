@@ -1,7 +1,18 @@
 ﻿<div>
-  <img src="{{ image }}" class="cover-image mb-3" />
-  <h3>{{ header }}</h3>
-  <p *ngFor="let label of labels">
-    <span>{{ label.description }}</span> <span>{{ label.score.toFixed(2) }}</span>
-  </p>
+	<img src="{{ image }}" class="cover-image mb-3" />
+	<h3>{{ header }}</h3>
+	
+	<ngb-tabset class="tabset1 nav-fill">
+		<ngb-tab title="Google Vision">
+			<ng-template ngbTabContent>
+				<!-- bar chart with annotations -->
+				<canvas #chart width="300px" height="300px"></canvas>
+			</ng-template>
+		</ngb-tab>
+		<ngb-tab title="Custom ML">
+			<ng-template ngbTabContent>
+				Custom ML
+			</ng-template>
+		</ngb-tab>
+	</ngb-tabset>
 </div>
