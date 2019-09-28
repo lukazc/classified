@@ -20,14 +20,14 @@
 	
 	<!-- TODO return search value -->
 	<div *ngIf="gridImages.length" class="row mt-5">
-		<app-typeahead-searchbox class="col-2 mx-auto" [labels]="allImageLabels"></app-typeahead-searchbox>
+		<app-typeahead-searchbox class="col-2 mx-auto" [labels]="allImageLabels" (query)="filterImages($event)"></app-typeahead-searchbox>
 	</div>
 	
 	<div class="container mt-5">
 		<div class="row justify-content-around text-center pb-5">
 			<app-grid-box
 			class="col-4 p-5 card d-block"
-			*ngFor="let image of gridImages"
+			*ngFor="let image of gridImages | annotationsFilter:searchQuery"
 			[filename]="image.filename"
 			[header]="image.labelAnnotations ? image.labelAnnotations[0].description : null"
 			[labels]="image.labelAnnotations"

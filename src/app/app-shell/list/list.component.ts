@@ -97,7 +97,7 @@ export class ListComponent implements OnInit {
 		this.listService.deletePhoto(filename).subscribe(
 			res => {
 
-				console.log('photo deleted ' + filename)
+				console.log('Image deleted ' + filename)
 			},
 			error => {
 				this.WarningMessageOpen = true;

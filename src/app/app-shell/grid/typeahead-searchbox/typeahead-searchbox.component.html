@@ -1,1 +1,1 @@
-<input id="typeahead-searchbox" type="text" class="form-control" [(ngModel)]="searchInput" [ngbTypeahead]="searchTypeahead"/>
+<input id="typeahead-searchbox" type="text" class="form-control" [(ngModel)]="searchInput" (ngModelChange)="emitQuery()" [ngbTypeahead]="searchTypeahead"/>

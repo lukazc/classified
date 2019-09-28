@@ -24,7 +24,6 @@ export class GridBoxComponent implements AfterViewInit {
 	}
 
 	handleTabChange(event) {
-		console.log(event)
 		if(event.nextId === "vision")
 		{
 			setTimeout(() => {

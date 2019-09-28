@@ -16,8 +16,10 @@ export class GridComponent implements OnInit {
 
 	gridImages: IGridImageItem[] = [];
 	allImageLabels: string[] = [];
-	selectedImage: File;
+	searchQuery: string = '';
+
 	
+	selectedImage: File;
 	uploadInProgress = false;
 	fileUploadIcon = faUpload;
 
@@ -27,7 +29,7 @@ export class GridComponent implements OnInit {
 		this.gridService.getImages().subscribe(
 			result => {
 				this.gridImages = result;
-				
+
 				// collect all image annotations into an array
 				this.allImageLabels = this.gridImages.reduce((labels, image) => {
 					return labels.concat(image.labelAnnotations.map(annotation => annotation['description']));
@@ -79,6 +81,10 @@ export class GridComponent implements OnInit {
 	handleWarningClose(open: boolean) {
 		this.WarningMessageOpen = open;
 		this.WarningMessageText = '';
+	}
+
+	filterImages(searchQuery) {
+		this.searchQuery = searchQuery;
 	}
 }
 	

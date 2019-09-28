@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
@@ -10,12 +10,17 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 export class TypeaheadSearchboxComponent implements OnInit {
 
 	@Input() labels: string[] = [];
+	@Output() query = new EventEmitter<string>();
 
 	public searchInput: string;
 
 	constructor() { }
 	
 	ngOnInit() {
+	}
+
+	emitQuery() {
+		this.query.emit(this.searchInput);
 	}
 	
 	// must be a fat-arrow function because of scoping problems
@@ -30,4 +35,3 @@ export class TypeaheadSearchboxComponent implements OnInit {
 	}
 			
 }
-		

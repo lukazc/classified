@@ -8,15 +8,17 @@ import { GridBoxComponent } from './grid-box/grid-box.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-;
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { TypeaheadSearchboxComponent } from './typeahead-searchbox/typeahead-searchbox.component'
+import { AnnotationsFilterPipe } from './../../shared/annotations-filter/annotations-filter.pipe';
 
 @NgModule({
   declarations: [
     GridComponent,
     GridBoxComponent,
-    TypeaheadSearchboxComponent
+    TypeaheadSearchboxComponent,
+    AnnotationsFilterPipe
   ],
   imports: [
     CommonModule,
