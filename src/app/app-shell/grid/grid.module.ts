@@ -1,5 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbAlertModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { GridComponent } from './grid.component';
 import { GridRoutingModule } from './grid-routing.module';
@@ -17,7 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     WarningMessageModule,
     GridRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbAlertModule,
+    NgbTabsetModule
   ]
 })
 export class GridModule { }

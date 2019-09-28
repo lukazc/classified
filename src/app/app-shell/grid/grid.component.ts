@@ -2,8 +2,6 @@
 
 import { GridService, IGridImageItem } from './grid.service';
 
-import { Chart } from 'chart.js';
-
 @Component({
 	selector: 'app-grid',
 	templateUrl: './grid.component.html',
