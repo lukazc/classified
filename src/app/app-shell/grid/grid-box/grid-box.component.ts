@@ -1,4 +1,4 @@
-﻿import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+﻿import { Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 import { Chart } from 'chart.js';
 
@@ -13,6 +13,8 @@ export class GridBoxComponent implements AfterViewInit {
 	@Input() header: string;
 	@Input() labels: Object[];
 	@Input() image: string;
+
+	@Output() delete = new EventEmitter();
 
 	@ViewChild('chart', { static: false }) chartCanvas: ElementRef;
 	private chart: Chart;
@@ -84,4 +86,7 @@ export class GridBoxComponent implements AfterViewInit {
 		});
 	}
 	
+	onDelete() {
+		this.delete.emit();
+	}
 }

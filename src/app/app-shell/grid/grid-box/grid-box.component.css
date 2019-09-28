@@ -3,3 +3,31 @@
     width: 100%;
     object-fit: cover;
 }
+
+/* Delete button */
+.close {
+    position: absolute;
+    right: 24px;
+    top: 4px;
+    width: 4px;
+    height: 4px;
+    opacity: 0.1;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 16px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+  
