@@ -19,7 +19,7 @@ export class GridComponent implements OnInit {
 	searchQuery: string = '';
 
 	
-	selectedImage: File;
+	selectedImage: File[];
 	uploadInProgress = false;
 	fileUploadIcon = faUpload;
 
@@ -44,7 +44,7 @@ export class GridComponent implements OnInit {
 	}
 
 	onFileChanged(event) {
-		this.selectedImage = event.target.files[0];
+		this.selectedImage = Array.from(event.target.files);
 
 		this.handleUploadImage();
 	}
@@ -54,7 +54,7 @@ export class GridComponent implements OnInit {
 
 		this.gridService.uploadImage(this.selectedImage).subscribe(
 			(response) => {
-				this.gridImages.push(response);
+				this.gridImages.push(...response);
 				this.uploadInProgress = false;
 			},
 			error => {

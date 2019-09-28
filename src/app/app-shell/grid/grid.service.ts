@@ -17,12 +17,15 @@ export class GridService {
 		return this.http.get<IGridImageItem[]>(this.imagesUrl);
 	}
 	
-	uploadImage(image): Observable<IGridImageItem> {
+	uploadImage(images): Observable<IGridImageItem[]> {
 		
 		const formData =  new FormData();
-		formData.append('image', image);
+
+		images.forEach(image => {
+			formData.append('image', image);
+		});
 		
-		return this.http.post<IGridImageItem>(this.imagesUrl, formData);
+		return this.http.post<IGridImageItem[]>(this.imagesUrl, formData);
 	}
 	
 	deleteImage(name: string) {

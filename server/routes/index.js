@@ -56,19 +56,24 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 
 // IMAGE ENDPOINTS
 // upload image
-router.post(CONSTANTS.ENDPOINT.IMAGE, upload.single('image'), function(req, res) {
-	console.log(req.file);
+router.post(CONSTANTS.ENDPOINT.IMAGE, upload.array('image'), function(req, res) {
 
-	const filename = req.file.filename;
-	const filePath = req.file.path;
+	let images = [];
 
-	// read binary data
-	const bitmap = fs.readFileSync(filePath);
-	// convert binary data to base64 encoded string
-	const b64 = new Buffer.from(bitmap).toString('base64');
+	req.files.forEach((image) => {
+		const filename = image.filename;
+		const filePath = image.path;
+	
+		// read binary data
+		const bitmap = fs.readFileSync(filePath);
+		// convert binary data to base64 encoded string
+		const b64 = new Buffer.from(bitmap).toString('base64');
+
+		images.push({ filename, filePath, b64 })
+	});
 
 	// pass response as callback to wait for Vision API response
-	annotateImage({ filename, filePath, b64 }, res);
+	annotateImages(images, res);
 
 	// res.json(imageAnnotations);
 });
@@ -144,23 +149,45 @@ function readDatastore() {
 	// });
 }
 
-async function annotateImage({ filename, filePath, b64 }, response = false) {
+async function annotateImages(images, response = false) {
+
+	// generate request object for each image
+	let annotationRequests = [];
+
+	images.forEach((image) => {
+		annotationRequests.push({
+			"image":{
+				"content": image.b64,
+			},
+			"features": [
+				{
+					"type": "LABEL_DETECTION",
+					"maxResults": 5
+				}
+			]
+		})
+	});
+
 	try {
 		// TODO test additional features
-		const [result] = await client.annotateImage(
-			{
-				"image":{
-					"content": b64,
-				},
-				"features": [
-					{
-						"type": "LABEL_DETECTION",
-						"maxResults": 5
-					}
-				]
-			}
-		);
-		
+		const [result] = await client.batchAnnotateImages({ requests: annotationRequests });
+
+		let res = [];
+		let newAnnotations = {};
+
+		for (const [index, annotations] of result['responses'].entries()) {
+
+			let filename = images[index]['filename'];
+			// append encoding type to beginning so the img src can interpret it
+			let b64 = 'data:image/jpeg;base64,' + images[index]['b64'];
+			let labelAnnotations = annotations['labelAnnotations'];
+
+			res.push({ filename, b64, labelAnnotations });
+
+			//add annotations
+			newAnnotations[filename] = annotations;
+		}
+
 		fs.readFile('imageAnnotations.json', 'utf8', (err, data) => {
 			
 			let imageAnnotations;
@@ -172,22 +199,16 @@ async function annotateImage({ filename, filePath, b64 }, response = false) {
 				imageAnnotations = JSON.parse(data);
 			}
 			
-			//add annotations
-			imageAnnotations[filename] = result;
-			//convert it back to json
-			json = JSON.stringify(imageAnnotations);
-			// write to disk 
-			fs.writeFile('imageAnnotations.json', json, 'utf8', (error) => {
+
+			imageAnnotations = { ...imageAnnotations, ...newAnnotations };
+
+			// write annotations to disk 
+			fs.writeFile('imageAnnotations.json', JSON.stringify(imageAnnotations), 'utf8', (error) => {
 				if(error) console.log('writeFile imageAnnotations ERROR -> ', error)
 			});
 		});
-		
-		// append encoding type to beginning so the img src can interpret it
-		b64 = 'data:image/jpeg;base64,' + b64;
-		
-		let labelAnnotations = result['labelAnnotations'];
-		
-		if (response) response.json({ filename, b64, labelAnnotations });
+				
+		if (response) response.json(res);
 		
 	} catch (error) {
 		console.log('annotateImage ERROR ', error);

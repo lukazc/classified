@@ -8,7 +8,7 @@
 				<label *ngIf="!uploadInProgress" for="fileUpload" class="col-2 mx-auto file-upload btn btn-primary btn-block rounded-pill shadow">
 					<fa-icon [icon]="fileUploadIcon"></fa-icon>
 					Upload
-					<input id="fileUpload" type="file" name="image" (change)="onFileChanged($event)">
+					<input id="fileUpload" type="file" name="image" (change)="onFileChanged($event)" multiple>
 				</label>
 				<button *ngIf="uploadInProgress" class="col-2 mx-auto file-upload btn btn-primary btn-block rounded-pill shadow" disabled>
 					<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
