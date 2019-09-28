@@ -66,7 +66,7 @@ export class GridComponent implements OnInit {
 	}
 
 	handleDeleteImage(filename, i) {
-		this.gridImages.splice(i);
+		this.gridImages.splice(i, 1);
 		this.gridService.deleteImage(filename).subscribe(
 			res => {
 

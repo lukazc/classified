@@ -10,11 +10,26 @@ export class AnnotationsFilterPipe implements PipeTransform {
 			return images;
 		}
 
-		return images.filter((image) => {
-			return image['labelAnnotations'].some((label) => {
+		return images.reduce((acc: Object[], image: Object, index: number) => {
+			image['index'] = index;
+			
+			if (image['labelAnnotations'].some((label) => {
 				return label['description'].toLowerCase().includes(searchQuery.toLowerCase());
-			});
-		});
+			}))
+			{
+				return [...acc, image];
+			}
+			else
+			{
+				return acc;
+			}
+		}, []);
+
+		// return images.filter((image) => {
+		// 	return image['labelAnnotations'].some((label) => {
+		// 		return label['description'].toLowerCase().includes(searchQuery.toLowerCase());
+		// 	});
+		// });
 	}
 	
 }
