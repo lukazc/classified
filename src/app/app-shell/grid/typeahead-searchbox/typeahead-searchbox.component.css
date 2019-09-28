@@ -1,0 +1,7 @@
+input {
+    background-image: url('/assets/search-prism.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    background-size: 15px;
+    padding-left: 30px;
+}

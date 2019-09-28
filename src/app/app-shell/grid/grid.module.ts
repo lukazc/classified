@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbAlertModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbTabsetModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { GridComponent } from './grid.component';
 import { GridRoutingModule } from './grid-routing.module';
@@ -9,11 +9,14 @@ import { WarningMessageModule } from '../../shared/warning-message/warning-messa
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+;
+import { TypeaheadSearchboxComponent } from './typeahead-searchbox/typeahead-searchbox.component'
 
 @NgModule({
   declarations: [
     GridComponent,
-    GridBoxComponent
+    GridBoxComponent,
+    TypeaheadSearchboxComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     ReactiveFormsModule,
     NgbAlertModule,
     NgbTabsetModule,
+    NgbTypeaheadModule,
     FontAwesomeModule
   ]
 })
