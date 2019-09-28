@@ -31,10 +31,7 @@ export class GridComponent implements OnInit {
 				this.gridImages = result;
 
 				// collect all image annotations into an array
-				this.allImageLabels = this.gridImages.reduce((labels, image) => {
-					if(!image.labelAnnotations || !image.labelAnnotations.length) return [];
-					return labels.concat(image.labelAnnotations.map(annotation => annotation['description']));
-				}, []);
+				this.getAllImageLabels();
 			},
 			error => {
 				this.WarningMessageOpen = true;
@@ -55,6 +52,7 @@ export class GridComponent implements OnInit {
 		this.gridService.uploadImage(this.selectedImage).subscribe(
 			(response) => {
 				this.gridImages.push(...response);
+				this.getAllImageLabels();
 				this.uploadInProgress = false;
 			},
 			error => {
@@ -86,6 +84,14 @@ export class GridComponent implements OnInit {
 
 	filterImages(searchQuery) {
 		this.searchQuery = searchQuery;
+	}
+
+	getAllImageLabels() {
+		// collect all image annotations into an array
+		this.allImageLabels = this.gridImages.reduce((labels, image) => {
+			if(!image.labelAnnotations || !image.labelAnnotations.length) return [];
+			return labels.concat(image.labelAnnotations.map(annotation => annotation['description']));
+		}, []).filter((value, index, self) => self.indexOf(value) === index);
 	}
 }
 	

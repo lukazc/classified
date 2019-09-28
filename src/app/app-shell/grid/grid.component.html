@@ -32,7 +32,7 @@
 			[header]="image.labelAnnotations ? image.labelAnnotations[0].description : null"
 			[labels]="image.labelAnnotations"
 			[image]="image.b64"
-			(delete)="handleDeleteImage(image.filename, image.index || i)"
+			(delete)="handleDeleteImage(image.filename, image.index != undefined ? image.index : i)"
 			>
 		</app-grid-box>
 	</div>
