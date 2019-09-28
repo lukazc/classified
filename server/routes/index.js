@@ -112,7 +112,6 @@ router.delete(CONSTANTS.ENDPOINT.IMAGE + "/:filename", function(req, res) {
 	fs.unlink(path.join(datastorePath, filename), function(err) {
 		if(err) throw err;
 		
-		// TODO delete annotations from JSON
 		deleteImageAnnotations(filename);
 		
 		console.log('File deleted ' + filename);

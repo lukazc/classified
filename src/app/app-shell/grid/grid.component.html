@@ -21,10 +21,10 @@
 	<!-- TODO add search -->
 	<!-- TODO add TYPEAHEAD -->
 
-	<div class="container">
+	<div class="container mt-5">
 		<div class="row justify-content-around text-center pb-5">
 			<app-grid-box
-			class="col-4 p-5"
+			class="col-4 p-5 card d-block"
 			*ngFor="let image of gridImages"
 			[filename]="image.filename"
 			[header]="image.labelAnnotations ? image.labelAnnotations[0].description : null"
