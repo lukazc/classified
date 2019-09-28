@@ -34,5 +34,5 @@ export class GridService {
 export interface IGridImageItem {
 	b64: string;
 	filename: string;
-	labelAnnotations: Object;
+	labelAnnotations: Object[];
 }

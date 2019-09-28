@@ -1,7 +1,7 @@
 ﻿<main id="mainContent">
 	<div class="text-center header">
 		<h1>Image classification</h1>
-
+		
 		<div>
 			<p>Upload an image to begin.</p>
 			<form class="row form-group" (submit)="handleUploadImage()">
@@ -18,9 +18,11 @@
 		</div>
 	</div>
 	
-	<!-- TODO add search -->
-	<!-- TODO add TYPEAHEAD -->
-
+	<!-- TODO return search value -->
+	<div *ngIf="gridImages.length" class="row mt-5">
+		<app-typeahead-searchbox class="col-2 mx-auto" [labels]="allImageLabels"></app-typeahead-searchbox>
+	</div>
+	
 	<div class="container mt-5">
 		<div class="row justify-content-around text-center pb-5">
 			<app-grid-box
@@ -31,13 +33,13 @@
 			[labels]="image.labelAnnotations"
 			[image]="image.b64"
 			>
-			</app-grid-box>
-		</div>
+		</app-grid-box>
 	</div>
-	<app-warning-message
-	*ngIf="WarningMessageOpen"
-	[text]="WarningMessageText"
-	(WarningMessageOpen)="handleWarningClose($event)"
-	>
-	</app-warning-message>
+</div>
+<app-warning-message
+*ngIf="WarningMessageOpen"
+[text]="WarningMessageText"
+(WarningMessageOpen)="handleWarningClose($event)"
+>
+</app-warning-message>
 </main>

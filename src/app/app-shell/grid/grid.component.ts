@@ -10,11 +10,12 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons'
 	styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
-	
+
 	WarningMessageText = 'Request to get grid images failed:';
 	WarningMessageOpen = false;
-	
+
 	gridImages: IGridImageItem[] = [];
+	allImageLabels: string[] = [];
 	selectedImage: File;
 	
 	uploadInProgress = false;
@@ -26,6 +27,11 @@ export class GridComponent implements OnInit {
 		this.gridService.getImages().subscribe(
 			result => {
 				this.gridImages = result;
+				
+				// collect all image annotations into an array
+				this.allImageLabels = this.gridImages.reduce((labels, image) => {
+					return labels.concat(image.labelAnnotations.map(annotation => annotation['description']));
+				}, []);
 			},
 			error => {
 				this.WarningMessageOpen = true;
