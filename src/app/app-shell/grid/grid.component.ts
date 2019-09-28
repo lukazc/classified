@@ -32,6 +32,7 @@ export class GridComponent implements OnInit {
 
 				// collect all image annotations into an array
 				this.allImageLabels = this.gridImages.reduce((labels, image) => {
+					if(!image.labelAnnotations || !image.labelAnnotations.length) return [];
 					return labels.concat(image.labelAnnotations.map(annotation => annotation['description']));
 				}, []);
 			},

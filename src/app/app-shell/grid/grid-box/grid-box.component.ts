@@ -37,6 +37,7 @@ export class GridBoxComponent implements AfterViewInit {
 	}
 	
 	initializeChart() {
+		if(!this.labels || !this.labels.length) return;
 
 		this.chart = new Chart(this.chartCanvas.nativeElement, {
 			type: 'horizontalBar',
