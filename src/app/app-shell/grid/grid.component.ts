@@ -2,6 +2,8 @@
 
 import { GridService, IGridImageItem } from './grid.service';
 
+import { faUpload } from '@fortawesome/free-solid-svg-icons'
+
 @Component({
 	selector: 'app-grid',
 	templateUrl: './grid.component.html',
@@ -11,9 +13,13 @@ export class GridComponent implements OnInit {
 	
 	WarningMessageText = 'Request to get grid images failed:';
 	WarningMessageOpen = false;
+	
 	gridImages: IGridImageItem[] = [];
 	selectedImage: File;
 	
+	uploadInProgress = false;
+	fileUploadIcon = faUpload;
+
 	constructor(private gridService: GridService) { }
 	
 	ngOnInit() {
@@ -30,18 +36,24 @@ export class GridComponent implements OnInit {
 
 	onFileChanged(event) {
 		this.selectedImage = event.target.files[0];
+
+		this.handleUploadImage();
 	}
 		
 	handleUploadImage() {
+		this.uploadInProgress = true;
+
 		this.gridService.uploadImage(this.selectedImage).subscribe(
 			(response) => {
 				this.gridImages.push(response);
+				this.uploadInProgress = false;
 			},
 			error => {
 				this.WarningMessageOpen = true;
 				this.WarningMessageText = `Request to add Image failed: ${error}`;
+				this.uploadInProgress = false;
 			}
-			);
+		);
 	}
 
 	handleDeleteImage(filename, i) {

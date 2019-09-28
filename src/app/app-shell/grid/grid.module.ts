@@ -8,6 +8,8 @@ import { GridBoxComponent } from './grid-box/grid-box.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+
 @NgModule({
   declarations: [
     GridComponent,
@@ -20,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     NgbAlertModule,
-    NgbTabsetModule
+    NgbTabsetModule,
+    FontAwesomeModule
   ]
 })
 export class GridModule { }

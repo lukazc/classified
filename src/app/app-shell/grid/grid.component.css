@@ -1,6 +1,9 @@
 ﻿.header {
-    background-color: #cecece;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
-  
+	background-color: #cecece;
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
+
+.file-upload input[type='file'] {
+	display: none;
+}
