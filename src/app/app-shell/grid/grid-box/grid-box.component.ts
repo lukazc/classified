@@ -22,8 +22,23 @@ export class GridBoxComponent implements AfterViewInit {
 	ngAfterViewInit() {
 		this.initializeChart()
 	}
+
+	handleTabChange(event) {
+		console.log(event)
+		if(event.nextId === "vision")
+		{
+			setTimeout(() => {
+				this.initializeChart();
+			}, 0);
+		}
+		else
+		{
+
+		}
+	}
 	
 	initializeChart() {
+
 		this.chart = new Chart(this.chartCanvas.nativeElement, {
 			type: 'horizontalBar',
 			data: {

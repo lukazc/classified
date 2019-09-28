@@ -1,16 +1,18 @@
 ﻿<div>
 	<img src="{{ image }}" class="cover-image mb-3" />
-	<h3>{{ header }}</h3>
+
+	<!-- TODO add verdicts -->
 	
-	<ngb-tabset class="tabset1 nav-fill">
-		<ngb-tab title="Google Vision">
+	<ngb-tabset class="tabset1 nav-fill" (tabChange)="handleTabChange($event)" [destroyOnHide]="true">
+		<ngb-tab title="Google Vision" id="vision">
 			<ng-template ngbTabContent>
 				<!-- bar chart with annotations -->
 				<canvas #chart width="300px" height="300px"></canvas>
 			</ng-template>
 		</ngb-tab>
-		<ngb-tab title="Custom ML">
+		<ngb-tab title="Custom ML" id="ml">
 			<ng-template ngbTabContent>
+				<!-- Machine Learning category goes here  -->
 				Custom ML
 			</ng-template>
 		</ngb-tab>
