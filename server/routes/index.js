@@ -9,7 +9,7 @@ var upload = multer({ dest: 'datastore/' });
 // getting datastore
 const path = require("path");
 const fs = require("fs");
-let datastorePhotos = [];
+let datastoreImages = [];
 const datastorePath = path.join('datastore');
 
 // init Google Vision
@@ -53,9 +53,9 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		}
 	});
 	
-	// PHOTO ENDPOINTS
-	// upload photo
-	router.post(CONSTANTS.ENDPOINT.PHOTO, upload.single('photo'), function(req, res) {
+	// IMAGE ENDPOINTS
+	// upload image
+	router.post(CONSTANTS.ENDPOINT.IMAGE, upload.single('image'), function(req, res) {
 		console.log(req.file);
 		
 		const filename = req.file.filename;
@@ -72,14 +72,14 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		// res.json(imageAnnotations);
 	});
 	
-	// get photos
-	router.get(CONSTANTS.ENDPOINT.PHOTO, function(req, res) {
+	// get images
+	router.get(CONSTANTS.ENDPOINT.IMAGE, function(req, res) {
 
-		let base64Photos = [];
+		let base64Images = [];
 		
 		readDatastore();
-		datastorePhotos.forEach(filename => {
-			// fs.createReadStream(path.join(datastorePath, photo), { encoding: 'base64' }).pipe(res);
+		datastoreImages.forEach(filename => {
+			// fs.createReadStream(path.join(datastorePath, filename), { encoding: 'base64' }).pipe(res);
 			
 			let image = {};
 			image['filename'] = filename;
@@ -100,13 +100,13 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			}
 			image['labelAnnotations'] = imageAnnotations[filename] ? imageAnnotations[filename]['labelAnnotations'] : null;
 			
-			base64Photos.push(image);
+			base64Images.push(image);
 		});
 		
-		res.json(base64Photos);
+		res.json(base64Images);
 	});
 	
-	router.delete(CONSTANTS.ENDPOINT.PHOTO + "/:name", function(req, res) {
+	router.delete(CONSTANTS.ENDPOINT.IMAGE + "/:name", function(req, res) {
 		const { name } = req.params;
 		fs.unlink(path.join(datastorePath, name), function(err) {
 			if(err) throw err;
@@ -114,7 +114,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 			// TODO delete annotations from JSON
 			
 			console.log('File deleted ' + name);
-			res.json({ name: name, text: "This photo was deleted" });
+			res.json({ name: name, text: "This image was deleted" });
 		});
 	});
 	
@@ -126,7 +126,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 	
 	function readDatastore() {
 		
-		datastorePhotos = fs.readdirSync(datastorePath);
+		datastoreImages = fs.readdirSync(datastorePath);
 		// //passsing directoryPath and callback function
 		// fs.readdir(datastorePath, function (err, files) {
 		//   //handling error
@@ -134,11 +134,11 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 		//       return console.log('Unable to scan directory: ' + err);
 		//   } 
 		
-		//   datastorePhotos = [];
+		//   datastoreImages = [];
 		//   //listing all files using forEach
 		//   files.forEach(function (file) {
 		//       // Do whatever you want to do with the file
-		//       datastorePhotos.push(file); 
+		//       datastoreImages.push(file); 
 		//   });
 		// });
 	}

@@ -2,6 +2,8 @@
 
 import { GridService, IGridImageItem } from './grid.service';
 
+import { Chart } from 'chart.js';
+
 @Component({
 	selector: 'app-grid',
 	templateUrl: './grid.component.html',
@@ -12,6 +14,7 @@ export class GridComponent implements OnInit {
 	WarningMessageText = 'Request to get grid images failed:';
 	WarningMessageOpen = false;
 	gridImages: IGridImageItem[] = [];
+	selectedImage: File;
 	
 	constructor(private gridService: GridService) { }
 	
@@ -23,6 +26,36 @@ export class GridComponent implements OnInit {
 			error => {
 				this.WarningMessageOpen = true;
 				this.WarningMessageText = `Request to get grid images failed: ${error}`;
+			}
+		);
+	}
+
+	onFileChanged(event) {
+		this.selectedImage = event.target.files[0];
+	}
+		
+	handleUploadImage() {
+		this.gridService.uploadImage(this.selectedImage).subscribe(
+			(response) => {
+				this.gridImages.push(response);
+			},
+			error => {
+				this.WarningMessageOpen = true;
+				this.WarningMessageText = `Request to add Image failed: ${error}`;
+			}
+			);
+	}
+
+	handleDeleteImage(filename, i) {
+		this.gridImages.splice(i);
+		this.gridService.deleteImage(filename).subscribe(
+			res => {
+
+				console.log('image deleted ' + filename)
+			},
+			error => {
+				this.WarningMessageOpen = true;
+				this.WarningMessageText = `Request to delete image failed: ${error}`;
 			}
 		);
 	}

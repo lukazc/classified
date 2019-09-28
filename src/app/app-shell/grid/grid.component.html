@@ -2,8 +2,8 @@
 	<div class="text-center header">
 		<h1>Classified</h1>
 		<p>Upload an image to begin image classification.</p>
-		<form (submit)="handleUploadPhoto()">
-			<input type="file" name="photo" (change)="onFileChanged($event)"/>
+		<form (submit)="handleUploadImage()">
+			<input type="file" name="image" (change)="onFileChanged($event)"/>
 			<button type="submit">Submit</button>
 		</form>
 	</div>
@@ -17,7 +17,7 @@
 			class="col-4 p-5"
 			*ngFor="let image of gridImages"
 			[filename]="image.filename"
-			[header]="image.labelAnnotations[0].description"
+			[header]="image.labelAnnotations ? image.labelAnnotations[0].description : null"
 			[labels]="image.labelAnnotations"
 			[image]="image.b64"
 			>

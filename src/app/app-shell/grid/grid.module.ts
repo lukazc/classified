@@ -5,6 +5,7 @@ import { GridComponent } from './grid.component';
 import { GridRoutingModule } from './grid-routing.module';
 import { GridBoxComponent } from './grid-box/grid-box.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,9 @@ import { WarningMessageModule } from '../../shared/warning-message/warning-messa
   imports: [
     CommonModule,
     WarningMessageModule,
-    GridRoutingModule
+    GridRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class GridModule { }

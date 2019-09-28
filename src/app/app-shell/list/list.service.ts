@@ -52,7 +52,7 @@ export class ListService {
     // };
 
     const formData =  new FormData();
-    formData.append('photo', photo);
+    formData.append('image', photo);
 
     return this.http.post<IListItem>(this.imagesUrl, formData);
   }
