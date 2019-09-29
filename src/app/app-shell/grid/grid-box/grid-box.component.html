@@ -6,16 +6,16 @@
 	<!-- TODO add verdicts -->
 	
 	<ngb-tabset class="tabset1 nav-fill" (tabChange)="handleTabChange($event)" [destroyOnHide]="true">
-		<ngb-tab title="Google Vision" id="vision">
+		<ngb-tab title="Vision API" id="vision">
 			<ng-template ngbTabContent>
 				<!-- bar chart with annotations -->
 				<canvas #chart width="300px" height="300px"></canvas>
 			</ng-template>
 		</ngb-tab>
-		<ngb-tab title="Custom ML" id="ml">
+		<ngb-tab title="Neural Network" id="ml">
 			<ng-template ngbTabContent>
 				<!-- Machine Learning category goes here  -->
-				Custom ML
+				<h6 class="mt-5">under construction</h6 >
 			</ng-template>
 		</ngb-tab>
 	</ngb-tabset>

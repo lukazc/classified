@@ -14,9 +14,55 @@
 					<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
 					Analyzing
 				</button>
-
-				<!-- TODO add feature picker -->
+				
+				
 			</form>
+			<!-- TODO add feature picker -->
+			<button class="btn btn-outline-info mb-2" type="button" (click)="collapseOptions = !collapseOptions">Options</button>
+			<div class="mx-auto col-2 " id="options" [ngbCollapse]="!collapseOptions">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="labelCheckbox" disabled checked>
+					<label class="form-check-label" for="defaultCheck1">
+						Label detection
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="faceCheckbox">
+						Face detection
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="landmarkCheckbox">
+						Landmark detection
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="logoCheckbox">
+						Logo detection
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="textCheckbox">
+						Text detection
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="imagePropertiesCheckbox">
+						Image properties
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="cropCheckbox">
+						Crop suggestions
+					</label>
+				</div>
+			</div>
 		</div>
 	</div>
 	
