@@ -75,7 +75,7 @@
 	
 	<div class="container mt-5">
 		<div class="row justify-content-around text-center pb-5">
-			<app-grid-box
+			<app-grid-box @images
 			class="col-4 p-5 card d-block"
 			*ngFor="let image of gridImages | annotationsFilter:searchQuery; let i = index"
 			[filename]="image.filename"

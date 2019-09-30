@@ -1,13 +1,38 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { GridService, IGridImageItem } from './grid.service';
 
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
+// angular animations
+import {
+	trigger,
+	style,
+	animate,
+	transition
+} from '@angular/animations';
+
 @Component({
 	selector: 'app-grid',
 	templateUrl: './grid.component.html',
-	styleUrls: ['./grid.component.css']
+	styleUrls: ['./grid.component.css'],
+	animations: [
+		trigger('images', [
+		  transition(':enter', [
+			style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
+			animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
+			  style({ transform: 'scale(1)', opacity: 1 }))  // final
+		  ]),
+		  transition(':leave', [
+			style({ transform: 'scale(1)', opacity: 1, height: '*' }),
+			animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)', 
+			 style({ 
+			   transform: 'scale(0.5)', opacity: 0, 
+			   height: '0px', margin: '0px' 
+			 })) 
+		  ])
+		])
+	  ]
 })
 export class GridComponent implements OnInit {
 
