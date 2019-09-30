@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbAlertModule, NgbTabsetModule, NgbTypeaheadModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbTabsetModule, NgbTypeaheadModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { GridComponent } from './grid.component';
 import { GridRoutingModule } from './grid-routing.module';
@@ -29,7 +29,7 @@ import { AnnotationsFilterPipe } from './../../shared/annotations-filter/annotat
     NgbAlertModule,
     NgbTabsetModule,
     NgbTypeaheadModule,
-    NgbCollapseModule,
+    NgbDropdownModule,
     FontAwesomeModule
   ]
 })
