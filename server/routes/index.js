@@ -1,4 +1,4 @@
-﻿const CONSTANTS = require("../constants");
+const CONSTANTS = require("../constants");
 const express = require("express");
 const sampleData = require("../sampleData");
 
@@ -15,6 +15,17 @@ const datastorePath = path.join('datastore');
 // init Google Vision
 const vision = require('@google-cloud/vision');
 const GOOGLE_APPLICATION_CREDENTIALS_PATH = 'credentials.json';
+// exit process if there are no Vision API credentials
+if(!fs.existsSync(GOOGLE_APPLICATION_CREDENTIALS_PATH)
+	|| !JSON.parse(fs.readFileSync(GOOGLE_APPLICATION_CREDENTIALS_PATH, { encoding: 'utf8' }))['private_key']
+	|| !JSON.parse(fs.readFileSync(GOOGLE_APPLICATION_CREDENTIALS_PATH, { encoding: 'utf8' }))['project_id']
+)
+{
+	console.error("ERROR: Required file " + GOOGLE_APPLICATION_CREDENTIALS_PATH + " is not valid. Shutting down.");
+	console.log("You can create your own Vision API credentials at http://console.cloud.google.com")
+	process.exit();
+}
+
 const client = new vision.ImageAnnotatorClient({
 	keyFilename: GOOGLE_APPLICATION_CREDENTIALS_PATH
 });
