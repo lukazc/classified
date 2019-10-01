@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-	name: 'annotationsFilter'
+	name: 'annotationsFilter',
+	// TODO fix index problem on delete
+	// items keep their 'index' property, but the actual index changes when the array is spliced
+	pure: false
 })
 export class AnnotationsFilterPipe implements PipeTransform {
 	
